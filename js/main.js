@@ -1,45 +1,3 @@
-// Scroll to SKill
-// $(window).scroll(function() {
-// 	var hT = $('#skill').offset().top,
-// 		hH = $('#skill').outerHeight(),
-// 		wH = $(window).height(),
-// 		wS = $(this).scrollTop();
-// 	var flag;
-// 	// if (wS > (hT+hH-wH)){
-// 	if (wS > (hT+hH-wH) && (hT > wS) && (wS+wH > hT+hH)){
-// 		flag = true;
-// 	}
-// 	if (flag){
-// 		document.getElementById('management-bar').style.animation = "management-fill 2.5s forwards";
-// 		document.getElementById('estimation-bar').style.animation = "estimation-fill 2.5s forwards";
-// 		document.getElementById('research-bar').style.animation = "research-fill 2.5s forwards";
-// 	}
-
-//  });
-
-$(window).scroll(function(){
-	var myElement = document.getElementById('skill');
-	var bounding = myElement.getBoundingClientRect();
-	var myElementHeight = myElement.offsetHeight;
-	var myElementWidth = myElement.offsetWidth;
-
-	if (bounding.top >= -myElementHeight 
-		&& bounding.left >= -myElementWidth
-		&& bounding.right <= (window.innerWidth || document.documentElement.clientWidth) + myElementWidth
-		&& bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) + myElementHeight) {
-			document.getElementById('management-bar').style.animation = "management-fill 2.5s forwards";
-			document.getElementById('estimation-bar').style.animation = "estimation-fill 2.5s forwards";
-			document.getElementById('research-bar').style.animation = "research-fill 2.5s forwards";
-	} 
-	else {
-
-		document.getElementById('management-bar').style.animation = "none";
-		document.getElementById('estimation-bar').style.animation = "none";
-		document.getElementById('research-bar').style.animation = "none";
-	}
-});
-
-
 (function ($) {
 	"use strict";
 	var nav = $('nav');
@@ -54,7 +12,7 @@ $(window).scroll(function(){
 				}
 			},
 			"color": {
-				"value": ["#aa73ff", "#f8c210", "#83d238", "#33b1f8"]
+				"value": "#ffffff"
 			},
 			"shape": {
 				"type": "circle",
@@ -179,16 +137,16 @@ $(window).scroll(function(){
 		}
 	});
 	$('.back-to-top').click(function () {
-		$('html, body').animate({ scrollTop: 0 }, 1000, 'easeInOutExpo');
+		$('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
 		return false;
 	});
 
 	/*--/ Star ScrollTop /--*/
-	// $('.scrolltop-mf').on("click", function () {
-	// 	$('html, body').animate({
-	// 		scrollTop: 0
-	// 	}, 1000);
-	// });
+	$('.scrolltop-mf').on("click", function () {
+		$('html, body').animate({
+			scrollTop: 0
+		}, 1000);
+	});
 
 	/*--/ Star Counter /--*/
 	$('.counter').counterUp({
@@ -203,7 +161,7 @@ $(window).scroll(function(){
 			target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
 			if (target.length) {
 				$('html, body').animate({
-					scrollTop: (target.offset().top - navHeight + 20)
+					scrollTop: (target.offset().top - navHeight + 5)
 				}, 1000, "easeInOutExpo");
 				return false;
 			}
@@ -246,10 +204,10 @@ $(window).scroll(function(){
 		var typed_strings = $('.text-slider-items').text();
 		var typed = new Typed('.text-slider', {
 			strings: typed_strings.split(','),
-			typeSpeed: 70,
+			typeSpeed: 80,
 			loop: true,
 			backDelay: 1100,
-			backSpeed: 20
+			backSpeed: 30
 		});
 	}
 
@@ -266,132 +224,37 @@ $(window).scroll(function(){
 		}
 	});
 
+	$(document).on('click', "#app_customizer a", function (e) {
+		e.preventDefault();
+		$('#app_customizer').toggleClass('open-customizer');
+		return false;
+	}); 
+
+	$(document).on('click', ".colors span", function (e) {
+		e.preventDefault();
+		var target = $('body');
+		if (this.id == 'pink_pick')
+			target.removeClass('blue-color green-color orange-color').addClass('pink-color');
+		else if (this.id == 'blue_pick')
+			target.removeClass('pink-color green-color orange-color').addClass('blue-color');
+		else if (this.id == 'green_pick')
+			target.removeClass('blue-color pink-color orange-color').addClass('green-color');
+		else if (this.id == 'orange_pick')
+			target.removeClass('blue-color green-color pink-color').addClass('orange-color');
+		return false;
+	});
 })(jQuery);
 
-	
-// disable right click
-document.addEventListener('contextmenu', event => event.preventDefault());
- 
-    document.onkeydown = function (e) {
- 
-        // disable F12 key
-        if(e.keyCode == 123) {
-            return false;
-        }
- 
-        // disable I key
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
-            return false;
-        }
- 
-        // disable J key
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-            return false;
-        }
- 
-        // disable U key
-        if(e.ctrlKey && e.keyCode == 85) {
-            return false;
-        }
-    }
 
+	
+function changeCSS(cssFile, cssLinkIndex) {
 
-// Skill tag
-var skills = [
-	{"header" : "Language and OS",
-		"captions" : [
-		"Window",
-		"Python",
-		"C/C++",
-		"Bash Script",
-		"Linux"
-		],
-		"values" : [
-		0.75,
-		0.6,
-		0.7,
-		0.6,
-		0.5
-		]
-	},
-  ];
-  
-  var pentagonIndex = 0;
-  var valueIndex = 0;
-  var width = 0;
-  var height = 0;
-  var radOffset = Math.PI/2;
-  var sides = 5; // Number of sides in the polygon
-  var theta = 2 * Math.PI/sides; // radians per section
-  
-  function getXY(i, radius) {
-	return {"x": Math.cos(radOffset +theta * i) * radius*width + width/2,
-	  "y": Math.sin(radOffset +theta * i) * radius*height + height/2};
-  }
-  
-  var hue = [];
-  var hueOffset = 25;
-  
-  for (var s in skills) {
-	$(".skill-set").append('<div class="pentagon"><canvas class="pentCanvas"/></div>');
-	hue[s] = (hueOffset + s * 255/skills.length) % 255;
-  }
-  
-  $(".pentagon").each(function(index){
-	width = $(this).width();
-	height = $(this).height();
-	var ctx = $(this).find('canvas')[0].getContext('2d');
-	ctx.canvas.width = width;
-	ctx.canvas.height = height;
-	ctx.font="20px Monospace";
-	ctx.textAlign="center";
-	
-	/*** LABEL ***/
-	color = "hsl("+hue[pentagonIndex]+", 100%, 50%)";
-	ctx.fillStyle = "hsl(90, 70%, 45%)";
-	ctx.fillText(skills[pentagonIndex].header, width/2, 15);
-  
-	ctx.font="15px Monospace";   
-  
-	/*** PENTAGON BACKGROUND ***/
-	for (var i = 0; i < sides; i++) {
-	  // For each side, draw two segments: the side, and the radius
-	  ctx.beginPath();
-	  xy = getXY(i, 0.3);
-	  ctx.fillStyle = "hsl(165, 70%, 35%)";
-	  ctx.strokeStyle = "hsl(165, 70%, 25%)";
-	  ctx.moveTo(0.5*width, 0.5*height); //center
-	  ctx.lineTo(xy.x, xy.y);
-	  xy = getXY(i+1, 0.3);
-	  ctx.lineTo(xy.x, xy.y);
-	  xy = getXY(i, 0.37);
-	  console.log();
-	  ctx.fillText(skills[ pentagonIndex].captions[valueIndex],xy.x, xy.y +5);
-	  valueIndex++;
-	  ctx.closePath();
-	  ctx.fill();
-	  ctx.stroke();
-	}
-	
-	valueIndex = 0;
-	ctx.beginPath();
-	ctx.fillStyle = "rgba(245, 71, 71, 0.6)";
-	ctx.lineWidth = 5;
-	var value = skills[pentagonIndex].values[valueIndex];
-	xy = getXY(i, value * 0.3);
-	ctx.moveTo(xy.x,xy.y);
-	/*** SKILL GRAPH ***/
-	for (var i = 0; i < sides; i++) {
-	  xy = getXY(i, value * 0.3);
-	  ctx.lineTo(xy.x,xy.y);
-	  valueIndex++;
-	  value = skills[pentagonIndex].values[valueIndex];
-	}
-	ctx.closePath();
-	ctx.stroke();
-	ctx.fill();
-	valueIndex = 0;  
-	pentagonIndex++;
-  });
-  
-  
+	var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
+
+	var newlink = document.createElement("link");
+	newlink.setAttribute("rel", "stylesheet");
+	newlink.setAttribute("type", "text/css");
+	newlink.setAttribute("href", cssFile);
+
+	document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
+}
